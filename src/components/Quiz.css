@@ -1,0 +1,25 @@
+.quiz-container{
+    width: 80%;
+    margin: auto;
+    border:1px solid #000;
+    border-radius: 5px;
+}
+.questions-container{
+    width: 100%;
+    margin: auto;
+    border:1px solid rgb(2, 31, 70);
+    border-radius: 5px;
+}
+.answers-container{
+    display: inline-flex;
+}
+.answer-text{
+    margin: 0 5px;
+}
+.question-form{
+    border:1px solid rgb(22, 82, 160);
+    border-radius: 5px;
+}
+.answer-container{
+    border-bottom: 1px solid #000;
+}
