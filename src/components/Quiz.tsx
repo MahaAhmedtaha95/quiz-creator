@@ -6,15 +6,16 @@ import './Quiz.css'
 import Question from './Question.tsx';
 import Accordion from 'react-bootstrap/Accordion';
 
-const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit }) => {
+const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit,onQuizChanged }) => {
   const [title, setTitle] = useState(quiz.title);
   const [description, setDescription] = useState(quiz.description);
   const [url, setUrl] = useState(quiz.url);
   const [score, setScore] = useState(quiz.score);
   const [editFalg, setEditFlag] = useState(viewType)
   const [editeQuizeIndex, setEditeQuizeIndex] = useState(indextoBeChanged)
+  const [updatedQuiz,setUpdatedQuiz]=useState(quiz)
   const handleChange = (e) => {
-    let editedQuiz = quiz
+    let editedQuiz = updatedQuiz
     const { name, value } = e.target;
     switch (name) {
       case 'title':
@@ -36,6 +37,7 @@ const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit }) => {
       default:
         break;
     }
+    setUpdatedQuiz(editedQuiz)
   }
   // Function to edit an existing quiz
   const editQuiz = (quizId, quizIndex) => {
@@ -52,6 +54,13 @@ const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit }) => {
     let newURL = `https://www.youtube.com/embed/${videoId}?rel=0`
     return newURL
   }
+  const onQuestionsChange = (questions, quizeIndx) => {
+    updatedQuiz.questions_answers = questions
+  }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onQuizChanged(updatedQuiz,quizIndex)
+  }
   return (
     <Row className='quiz-container p-2 mt-2'>
       <Col lg="12" md="12">
@@ -65,10 +74,9 @@ const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit }) => {
           <Accordion.Item eventKey="0">
             <Accordion.Header>
               {title}
-
             </Accordion.Header>
             <Accordion.Body>
-              <Form className='text-start'>
+              <Form className='text-start' onSubmit={handleSubmit}>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                   <Form.Label>Quiz Title</Form.Label>
                   <Form.Control type="text" placeholder="Enter title" name="title"
@@ -103,7 +111,10 @@ const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit }) => {
                     </div>}
                 </Form.Group>
                 <div className='questions-container p-2 my-2'>
-                  <Question key={title} question={quiz.questions_answers} viewType={editFalg} indextoBeChanged={editeQuizeIndex} quizIndex={quizIndex} />
+                  <Question key={title} question={quiz.questions_answers} viewType={editFalg}
+                    indextoBeChanged={editeQuizeIndex} quizIndex={quizIndex}
+                    onQuestionsChange={onQuestionsChange}
+                  />
                 </div>
                 <Form.Group className="mb-3" controlId="formBasicPassword">
                   <Form.Label>Final Score</Form.Label>
@@ -112,9 +123,10 @@ const Quiz = ({ quiz, viewType, indextoBeChanged, quizIndex, onClickEdit }) => {
                     disabled={(viewType === "EDIT" || editFalg === "EDIT") && (indextoBeChanged === quizIndex || editeQuizeIndex === quizIndex) ? false : true}
                   />
                 </Form.Group>
-                {(viewType === "EDIT" || editFalg === "EDIT") && <Button variant="primary" type="submit">
-                  Submit
-                </Button>}
+                {(viewType === "EDIT" || editFalg === "EDIT") &&
+                  <Button variant="primary" type="submit">
+                    Submit
+                  </Button>}
               </Form>
             </Accordion.Body>
           </Accordion.Item>

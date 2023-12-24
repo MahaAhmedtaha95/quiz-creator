@@ -33,6 +33,13 @@ function AllQuizes() {
   const onEditClicked=(value)=>{
     setViewType(value)
   }
+
+  const onQuizChanged = (newQuiz, quizIndex) => {
+    const updatedQuizzes = [...quizzes]; // Create a copy of the quizzes array
+    updatedQuizzes[quizIndex] = newQuiz; // Update the quiz at the specified index
+    // Update the list of quizzes
+    setQuizzes(updatedQuizzes);
+  };
   return (
     <div>
       <h1>Quizzes</h1>
@@ -43,7 +50,9 @@ function AllQuizes() {
         <div key={quiz.id} >
           <Quiz quiz={quiz} viewType={viewType} 
            onClickEdit={onEditClicked}
-           indextoBeChanged={indextoBeChanged} quizIndex={index}/>
+           indextoBeChanged={indextoBeChanged} quizIndex={index}
+           onQuizChanged={onQuizChanged}
+           />
         </div>
       ))}
     </div>

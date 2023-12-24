@@ -80,8 +80,6 @@ export const data=[
         ],
         score:null,
         title:"quiz title",
-        url:"https://www.youtube.com/watch?v=t7lUSiddFd4"
-      // url:"https://www.youtube.com/embed/t7lUSiddFd4?rel=0"
-      
+        url:"https://www.youtube.com/watch?v=t7lUSiddFd4"      
      }
 ]

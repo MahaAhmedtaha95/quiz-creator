@@ -8,7 +8,7 @@ interface QuestionProps {
   question: Questions;
 }
 
-const Question: React.FC<QuestionProps> = ({ question,viewType,indextoBeChanged, quizIndex }) => {
+const Question: React.FC<QuestionProps> = ({ question,viewType,indextoBeChanged, quizIndex,onQuestionsChange }) => {
   const [questions, setQuestions] = useState<Questions[]>(question);
 
   // Function to add a new quiz
@@ -47,12 +47,14 @@ const updateAnswers = (newAnswers: Answer[], questionIndex: number) => {
     updatedQuestions[questionIndex] = updatedQuestion;
     return updatedQuestions;
   });
+  onQuestionsChange(questions,quizIndex)
+
 };
+
   return (
     <Row>
       <Col lg="11" md="11">
       <p>Questions</p>
-      {console.log("questionsquestions:",questions)}
         {
           questions.map((question,index) => {
             return (
